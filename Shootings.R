@@ -4,7 +4,7 @@ library(dplyr)
 library(RColorBrewer)
 library(ggmap)
 
-fatalShootings <- read.csv("~/R Data/fatal-police-shootings-data.csv", header = TRUE)
+fatalShootings <- read.csv("~/Projects/fatal-shootings-by-policeman-master/fatal-police-shootings-data.csv", header = TRUE)
 cities <- fatalShootings$city
 cities <- as.data.frame(cities)
 cityState <- subset(fatalShootings, select=c("city", "state"))
@@ -13,7 +13,8 @@ blackDeaths <- filter(fatalShootings, race == "B")
 asianDeaths <- filter(fatalShootings, race == "A")
 whiteDeaths <- filter(fatalShootings, race == "W")
 hispanicDeaths <- filter(fatalShootings, race == "H")
-#is N native american and is O other? or is A meaning American indian
+
+#Number of fatal Shootings of Black people by policemen
 sum(with(fatalShootings, race == "B"))
 
 ggplot(data = fatalShootings) +
@@ -62,6 +63,9 @@ locations <- paste(cityState$city, cityState$state)
 #geoLocations <- geocode(as.character(locations))
 #geocodeLocations <- cbind(geoLocations, cityState)
 #write.csv(geocodeLocations, file = "~/R Data/Geocodes.csv")
+
+geoLocations <- read.csv("~/Projects/fatal-shootings-by-policeman-master/Geocodes.csv")
+states <- map_data("state")
 
 ggplot(data = states) +
   geom_polygon(aes(x = long, y = lat, fill = region, group = group), color = "black") +
